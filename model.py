@@ -4,41 +4,22 @@ import json
 database = PostgresqlDatabase('teste', user='postgres', password='Tpg240482',
                            host='localhost', port=5432)
 
+# database = SqliteDatabase("db/dados.db")
+
 class BaseModel(Model):
     class Meta:
         database = database
 
-# class Cliente(BaseModel):
-#     nome = CharField()
-#     telefone = CharField()
-#     endereço = CharField()
-
-# class Cerimonial(BaseModel):
-#     nome = CharField()
-#     telefone = CharField()
-#     endereço = CharField()
-
-# class Encomenda(BaseModel):
-#     evento = CharField() #Aniversario ou Casamento ou Outro
-#     evento_usr = CharField() 
-#     cliente = ForeignKeyField(model=Cliente, backref='encomendas')
-#     cerimonial = ForeignKeyField(model=Cerimonial, backref='encomendas')
-#     data = DateField()
-#     produto = CharField()
-#     quantidade = IntegerField()
-#     entrega = CharField() # entrega ou retirada
-#     local_horario = CharField()
-#     obs = CharField()
-
-class Encomenda(BaseModel):
+class Cliente(BaseModel):
+    id = PrimaryKeyField()
     nome = CharField()
-    telefone = CharField()
-    # data = DateField()
-    cerimonial = CharField()
-    local = CharField()
+    cep = CharField()
+    logradouro = CharField()
+    bairro = CharField()
+    localidade = CharField()
+    uf = CharField()
 
-# database.create_tables([Cliente, Cerimonial, Encomenda])
-database.create_tables([Encomenda])
+database.create_tables([Cliente])
 
 
 

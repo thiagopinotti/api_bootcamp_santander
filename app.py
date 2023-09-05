@@ -1,6 +1,7 @@
 from playhouse.shortcuts import dict_to_model, model_to_dict
 from flask import Flask, request, jsonify, json
-from model import Cliente, Encomenda
+from model import Cliente
+import criando
 # import jsonpickle
 
 app = Flask(__name__)
@@ -13,12 +14,11 @@ def get_clientes():
         # return jsonpickle.encode(list(map(model_to_dict, cliente)), unpicklable=False) # Estudar
         return jsonify(list(map(model_to_dict, cliente)))
 
-@app.route('/clientes', methods=['POST'])
+@app.route('/clientes', methods=['PUT'])
 def set_clientes():
-    if request.method == 'POST':
-        cliente = dict_to_model(Cliente, request.get_json())
-        cliente.save()
-        return request.get_json()
+    cliente = dict_to_model(Cliente, request.get_json())
+    cliente.save()
+    return request.get_json()
 
 @app.route('/clientes/<id>', methods=['GET'])
 def get_cliente(id):
@@ -44,19 +44,5 @@ def delete_cliente(id):
         Cliente.delete_by_id(id)
         return {'mensagem': 'Deletado'}
     
-@app.route('/encomendas', methods=['GET'])
-def get_encomendas():
-    if request.method == 'GET':
-        encomendas = Encomenda.select().execute()
-        # return jsonpickle.encode(list(map(model_to_dict, encomendas)), unpicklable=False) # Estudar
-        return jsonify(list(map(model_to_dict, encomendas)))
-
-
-@app.route('/encomenda', methods=['POST'])
-def add_encomenda():
-    if request.method == 'POST':
-        encomenda = dict_to_model(Encomenda, request.get_json())
-        encomenda.save()
-        return request.get_json()
-    
+  
 app.run()
