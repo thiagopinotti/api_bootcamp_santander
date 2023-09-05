@@ -18,6 +18,8 @@ class Cliente(BaseModel):
     bairro = CharField()
     localidade = CharField()
     uf = CharField()
+    temperatura = CharField()
+    
 
 database.create_tables([Cliente])
 
